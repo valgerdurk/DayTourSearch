@@ -18,6 +18,10 @@ public class InfoCache {
     private List<TourInfo>          tours;
     private List<BookingInfo>       bookings;
     
+    public List<TourInfo> AllTours() {
+        return tours;
+    }
+    
     private String StripKey(String in) {
         // Strips strings of the form "xxxxxxxx"
         return in.substring(1, in.length() - 1); 
@@ -82,33 +86,59 @@ public class InfoCache {
         return tokens;
     }
     
-    private Region ParseRegion(String reg) {
+    public static Region ParseRegion(String reg) {
+        // Ugly switch taking advantage of fall-through,
+        //  whoop whoop!
         switch (reg) {
-            case "south":           return Region.SOUTH;
-            case "west":            return Region.WESTCOAST;
-            case "westfjords":      return Region.WESTFJORDS;
-            case "capital area":    return Region.CAPITAL;
-            case "east":            return Region.EAST;
-            case "north":           return Region.NORTH;
-            default:                return Region.UNDEFINED;
+            case "south":
+            case "SOUTH":           
+                return Region.SOUTH;
+                
+            case "west":
+            case "WEST":            
+                return Region.WESTCOAST;
+                
+            case "westfjords":      
+            case "WESTFJORDS":      
+                return Region.WESTFJORDS;
+                
+            case "capital area":    
+            case "CAPITAL":         
+                return Region.CAPITAL;
+                
+            case "east":            
+            case "EAST":            
+                return Region.EAST;
+                
+            case "north":           
+            case "NORTH":           
+                return Region.NORTH;
+                
+            default:                
+                return Region.UNDEFINED;
         }
     }
     
-    private TourType ParseType(String type) {
+    public static TourType ParseType(String type) {
         switch (type) {
             case "hiking":
+            case "HIKING":
                 return TourType.HIKING;
                 
             case "boat":
+            case "SAILING":
                 return TourType.SAILING;
                 
             case "glacier":
+            case "GLACIER":
                 return TourType.GLACIER;
                 
             case "food":
+            case "FOOD":
                 return TourType.FOOD;
                 
             case "sightseeing":
+            case "SIGHTS":
                 return TourType.SIGHTS;
                 
             default:
@@ -117,6 +147,63 @@ public class InfoCache {
     }
     
     public boolean LoadFromDisk(String fileName) {
+        // Start by clearing any current cache.
+        tours.clear();
+        bookings.clear();
+        
+        try {
+            FileInputStream in = new FileInputStream(fileName);
+            DataInputStream dat = new DataInputStream(in);
+            
+            int n = dat.readInt();
+            for (int i = 0; i < n; i++) {
+                TourInfo t = new TourInfo(dat);
+                tours.add(t);
+            }
+            
+            // TODO:    Read BookingInfo list.
+            
+            dat.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("FileNotFoundException.");
+            return false;
+        } catch (IOException e) {
+            System.out.println("IOException.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean WriteToDisk(String fileName) {
+        try {
+            FileOutputStream out = new FileOutputStream(fileName);
+            DataOutputStream dat = new DataOutputStream(out);
+            
+            dat.writeInt(tours.size());
+            for (TourInfo t : tours) {
+                t.WriteToStream(dat);
+            }
+            
+            // TODO:    Write BookingInfo list.
+            
+            dat.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("FileNotFoundException.");
+            return false;
+        } catch (IOException e) {
+            System.out.println("IOException.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // NOTE: This is an ugly barebones text parser for the
+    //          specific JSON data source.  This method should
+    //          NOT be used in general, prefer LoadFromDisk(..)
+    //          using tourdata.dat
+    public boolean LoadFromText(String fileName) {
         File inFile = new File(fileName);
         BufferedReader br;
         
@@ -138,7 +225,6 @@ public class InfoCache {
         
             String line = br.readLine();
             while (line != null) {
-                // System.out.println("line.");
                 line = line.trim();
                 
                 String[] tokens = line.split("\\s", 3);
@@ -180,7 +266,6 @@ public class InfoCache {
                             break;
                             
                         case "type":
-                        {
                             if (line.matches("\\[*\\],")) {
                                 String[] list = ParseList(line);
                                 for (int i = 0; i < list.length; i++) {
@@ -191,9 +276,10 @@ public class InfoCache {
                                 types.add(ParseType(Strip(tokens[2])));
                             }
                             break;
-                        }
+                        
                         case "region":
                             reg = ParseRegion(Strip(tokens[2]));
+                            System.out.println(reg.name());
                             break;
                             
                         case "description":
