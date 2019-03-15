@@ -102,7 +102,7 @@
           "price" : "40",
           "availability" : "May-Sept",
           "type" : "boat",
-          "region" : ["east", "south"],
+          "region" : "south",
           "description" : "This short adventure tour takes you on to the iconic glacier lagoon Jökulsálón in an amphibian boat - See the lagoon from a different angle!", 
           "about" : "Sailing on the famous Jökulsálón Glacier Lagoon South Iceland is a unique experience. Here you will take an unforgettable boat ride on the peculiar amphibian boats, that drive into the lagoon and sail around. You will experience the lagoon from a totally new perspective, getting up close and personal to the gigantic glaciers and seals that inhabit the lagoon. During the boat tour you will learn about the history and formation of the lagoon, as well as stories from the film productions of various Hollywood blockbusters, as scenes from films like James Bond and Batman were shot here.",
           "image" : "File:TripImages/glacierlagoon-tour-iceland-east.jpg",

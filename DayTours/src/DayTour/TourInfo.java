@@ -86,7 +86,8 @@ public class TourInfo {
         tags.add(tag);
     }
     
-    public TourInfo(boolean dp,
+    public TourInfo(boolean[] av,
+            boolean dp,
             Region reg,
             int dur,
             int p,
@@ -106,7 +107,11 @@ public class TourInfo {
         rating = rat;
         
         monthsAvailable = new boolean[12];
-        seatsPerDay = 0;
+        for (int k = 0; k < 12; k++) {
+            monthsAvailable[k] = av[k];
+        }
+        
+        seatsPerDay = 10;
         freeSeats = new int[365];
         
         tags = new ArrayList<>();
