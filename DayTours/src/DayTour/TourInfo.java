@@ -6,6 +6,7 @@
 package DayTour;
 
 import java.io.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Iterator;
@@ -31,6 +32,16 @@ public final class TourInfo {
     public final String     availableDesc;
     public final int        rating;
     
+    // These value is used for serial-/deserialization:
+    public final int        ID;
+    private static int      seed = 0;
+    
+    private static int GenID() {
+        seed++;
+        return seed - 1;
+    }
+    
+    // Construct TourInfo from data stream.
     public TourInfo(DataInputStream in)
             throws IOException
     {
@@ -47,7 +58,7 @@ public final class TourInfo {
         }
         
         doesPickup = in.readBoolean();
-        region = InfoCache.ParseRegion(in.readUTF());
+        region = Region.Interpret(in.readUTF());
         durationHours = in.readInt();
         priceISK = in.readInt();
         title = in.readUTF();
@@ -63,13 +74,22 @@ public final class TourInfo {
         activity = new ArrayList<>();
         n = in.readInt();
         for (int i = 0; i < n; i++) {
-            AddActivity(InfoCache.ParseType(in.readUTF()));
+            AddActivity(TourType.Interpret(in.readUTF()));
         }
         
         availableDesc = in.readUTF();
         rating = in.readInt();
+        
+        // NOTE: If we're loading a file, we update
+        //          the ID generator seed to reflect
+        //          the highest ID yet seen.
+        ID = in.readInt();
+        if (seed <= ID) {
+            seed = ID + 1;
+        }
     }
     
+    // Serialize the TourInfo object to a data stream.
     public boolean WriteToStream(DataOutputStream out)
             throws IOException
     {
@@ -103,18 +123,52 @@ public final class TourInfo {
         
         out.writeUTF(availableDesc);
         out.writeInt(rating);
+        out.writeInt(ID);
         
         return true;
     }
     
     public boolean ReserveSeats(int day, int seats) {
+        // Input validation:
+        if (day < 0 || day >= 365 || seats <= 0) {
+            return false;
+        }
+        
+        // If sufficient seats are free on the specified day,
+        //  reduce the number of free seats by the desired count.
+        if (freeSeats[day] >= seats) {
+            freeSeats[day] -= seats;
+            return true;
+        }
+        
         return false;
     }
     
+    // NOTE:    This method assumes both dates are from
+    //           the SAME year.  Will misfire horribly
+    //           if they are not.
     public int[] IsAvailable(Date begin, Date end) {
-        return null;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(begin);
+        
+        int d0 = cal.get(Calendar.DAY_OF_YEAR) - 1;
+        
+        cal.setTime(end);
+        int d1 = cal.get(Calendar.DAY_OF_YEAR) - 1;
+        
+        // NOTE:    This method does NOT check whether
+        //           begin is BEFORE end.
+        int[] out = new int[(d1 - d0) + 1];
+        
+        for (int i = d0; i <= d1; i++) {
+            out[i - d0] = freeSeats[i];
+        }
+        
+        return out;
     }
     
+    // This method fills out the freeSeats array based on
+    //  monthsAvailable and seatsPerDay.
     public void Complete() {
         int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int r = 0;
@@ -193,5 +247,7 @@ public final class TourInfo {
         
         tags = new ArrayList<>();
         activity = new ArrayList<>();
+        
+        ID = GenID();
     }
 }
