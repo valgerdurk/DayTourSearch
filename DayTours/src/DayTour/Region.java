@@ -17,5 +17,36 @@ public enum Region {
     EAST,
     WESTFJORDS,
     WESTCOAST,
-    HIGHLANDS
+    HIGHLANDS;
+    
+    public static Region Interpret(String reg) {
+        switch (reg) {
+            case "south":
+            case "SOUTH":           
+                return Region.SOUTH;
+                
+            case "west":
+            case "WEST":            
+                return Region.WESTCOAST;
+                
+            case "westfjords":      
+            case "WESTFJORDS":      
+                return Region.WESTFJORDS;
+                
+            case "capital area":    
+            case "CAPITAL":         
+                return Region.CAPITAL;
+                
+            case "east":            
+            case "EAST":            
+                return Region.EAST;
+                
+            case "north":           
+            case "NORTH":           
+                return Region.NORTH;
+                
+            default:                
+                return Region.UNDEFINED;
+        }
+    }
 }

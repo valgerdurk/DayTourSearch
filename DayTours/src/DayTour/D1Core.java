@@ -20,7 +20,15 @@ public class D1Core {
         
         // NOTE: the following line should not be called in general,
         //          prefer to load from .dat file.
-        // c.LoadFromText("trips.txt");
+        
+        /* 
+        c.LoadFromText("trips.txt");
+        c.Debug();
+        System.out.println("----------------------------------");
+        c.WriteToDisk("tourdata.dat");
+        c.LoadFromDisk("tourdata.dat");
+        c.Debug();
+        */
         
         
         // Demonstration:

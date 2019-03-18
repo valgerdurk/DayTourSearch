@@ -15,5 +15,32 @@ public enum TourType {
     SAILING,
     GLACIER,
     FOOD,
-    SIGHTS
+    SIGHTS;
+    
+    public static TourType Interpret(String type) {
+        switch (type) {
+            case "hiking":
+            case "HIKING":
+                return TourType.HIKING;
+                
+            case "boat":
+            case "SAILING":
+                return TourType.SAILING;
+                
+            case "glacier":
+            case "GLACIER":
+                return TourType.GLACIER;
+                
+            case "food":
+            case "FOOD":
+                return TourType.FOOD;
+                
+            case "sightseeing":
+            case "SIGHTS":
+                return TourType.SIGHTS;
+                
+            default:
+                return TourType.UNDEFINED;
+        }
+    }
 }
