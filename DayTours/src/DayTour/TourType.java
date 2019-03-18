@@ -10,5 +10,10 @@ package DayTour;
  * @author David Francis <dff1@hi.is>
  */
 public enum TourType {
-    
+    UNDEFINED,
+    HIKING,
+    SAILING,
+    GLACIER,
+    FOOD,
+    SIGHTS
 }

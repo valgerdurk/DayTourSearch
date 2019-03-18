@@ -17,8 +17,17 @@ public class D1Core {
     public static void main(String[] args) {
         // TODO code application logic here
         InfoCache c = new InfoCache();
-        c.LoadFromDisk("trips.txt");
-        c.Debug();
+        
+        // NOTE: the following line should not be called in general,
+        //          prefer to load from .dat file.
+        // c.LoadFromText("trips.txt");
+        
+        
+        // Demonstration:
+        c.LoadFromDisk("tourdata.dat");
+        for (TourInfo t : c.AllTours()) {
+            System.out.println(t.title);
+        }
     }
     
 }
