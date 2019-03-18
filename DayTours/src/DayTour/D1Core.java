@@ -21,7 +21,7 @@ public class D1Core {
         // NOTE: the following line should not be called in general,
         //          prefer to load from .dat file.
         
-        /* 
+        /*
         c.LoadFromText("trips.txt");
         c.Debug();
         System.out.println("----------------------------------");
@@ -32,10 +32,17 @@ public class D1Core {
         
         
         // Demonstration:
+        
         c.LoadFromDisk("tourdata.dat");
         for (TourInfo t : c.AllTours()) {
             System.out.println(t.title);
         }
+        
     }
     
+    
+    private static void GenBookingSet() {
+        // TODO: Generate sample bookings for some
+        //          tours for testing purposes.
+    }
 }

@@ -32,6 +32,16 @@ public final class TourInfo {
     public final String     availableDesc;
     public final int        rating;
     
+    // These value is used for serial-/deserialization:
+    public final int        ID;
+    private static int      seed = 0;
+    
+    private static int GenID() {
+        seed++;
+        return seed - 1;
+    }
+    
+    // Construct TourInfo from data stream.
     public TourInfo(DataInputStream in)
             throws IOException
     {
@@ -69,8 +79,17 @@ public final class TourInfo {
         
         availableDesc = in.readUTF();
         rating = in.readInt();
+        
+        // NOTE: If we're loading a file, we update
+        //          the ID generator seed to reflect
+        //          the highest ID yet seen.
+        ID = in.readInt();
+        if (seed <= ID) {
+            seed = ID + 1;
+        }
     }
     
+    // Serialize the TourInfo object to a data stream.
     public boolean WriteToStream(DataOutputStream out)
             throws IOException
     {
@@ -104,6 +123,7 @@ public final class TourInfo {
         
         out.writeUTF(availableDesc);
         out.writeInt(rating);
+        out.writeInt(ID);
         
         return true;
     }
@@ -147,6 +167,8 @@ public final class TourInfo {
         return out;
     }
     
+    // This method fills out the freeSeats array based on
+    //  monthsAvailable and seatsPerDay.
     public void Complete() {
         int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int r = 0;
@@ -225,5 +247,7 @@ public final class TourInfo {
         
         tags = new ArrayList<>();
         activity = new ArrayList<>();
+        
+        ID = GenID();
     }
 }

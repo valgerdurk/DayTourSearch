@@ -18,8 +18,43 @@ public class InfoCache {
     private List<TourInfo>          tours;
     private List<BookingInfo>       bookings;
     
+    // Basic check to enforce that only a single InfoCache
+    //  exists.  Multiple copies of this class will result
+    //  in all sorts of issues with TourIDs.
+    private static boolean          isMade = false;
+    
+    // NOTE: This method assumes a list of VALID bookings,
+    //        e.g. all bookings refer to a valid day for
+    //        the given tour, and reserve a number of seats
+    //        which are in fact available.
+    //      If this is not true, the method will fail on
+    //        the first invalid booking, and process the list
+    //        no further.
+    //      Note that all bookings confirmed PRIOR to the
+    //        invalid booking will still be confirmed after
+    //        failure.
+    public boolean Confirm(List<BookingInfo> pending) {
+        for (BookingInfo b : pending) {
+            if (!b.tour.ReserveSeats(b.day, b.seats)) {
+                return false;
+            }
+            bookings.add(b);
+        }
+        return true;
+    }
+    
     public List<TourInfo> AllTours() {
         return tours;
+    }
+    
+    public TourInfo TourFromID(int ID) {
+        for (TourInfo t : tours) {
+            if (t.ID == ID) {
+                return t;
+            }
+        }
+        
+        return null;
     }
     
     public void Debug() {
@@ -28,14 +63,6 @@ public class InfoCache {
             System.out.println(i.next().title);
         }
     }
-    
-    /*
-    private void PrintList(String[] list) {
-        for (int i = 0; i < list.length; i++) {
-            System.out.println(list[i]);
-        }
-    }
-    */
     
     public boolean LoadFromDisk(String fileName) {
         // Start by clearing any current cache.
@@ -52,7 +79,11 @@ public class InfoCache {
                 tours.add(t);
             }
             
-            // TODO:    Read BookingInfo list.
+            n = dat.readInt();
+            for (int i = 0; i < n; i++) {
+                BookingInfo b = new BookingInfo(this, dat);
+                bookings.add(b);
+            }
             
             dat.close();
         } catch (FileNotFoundException e) {
@@ -76,7 +107,10 @@ public class InfoCache {
                 t.WriteToStream(dat);
             }
             
-            // TODO:    Write BookingInfo list.
+            dat.writeInt(bookings.size());
+            for (BookingInfo b : bookings) {
+                b.WriteToStream(dat);
+            }
             
             dat.close();
         } catch (FileNotFoundException e) {
@@ -110,7 +144,16 @@ public class InfoCache {
     }
     
     public InfoCache() {
-        tours = new ArrayList<>();
-        bookings = new ArrayList<>();
+        // Just a quick and dirty confirmation that the 
+        //  InfoCache object is only constructed once.
+        if (!isMade) {
+            tours = new ArrayList<>();
+            bookings = new ArrayList<>();
+            isMade = true;
+        }
+        else {
+            tours = null;
+            bookings = null;
+        }
     }
 }
