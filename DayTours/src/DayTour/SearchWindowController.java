@@ -31,21 +31,4 @@ public class SearchWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-      /***
-     * Method that search for trips by string 
-     * @param tour list of trips in Iceland 
-     * @param search SearchString
-     * @return return results as a string 
-     */
-     /**private ObservableList<TourInfo> chooseRegion(ObservableList<TourInfo> tour, String search) {
-        ObservableList<TourInfo> newVector = FXCollections.observableArrayList();
-      
-        for (TourInfo s : tour) {
-            String a = s.getRegion().toLowerCase();
-            if (a.contains(search)||s.getRegion().contains(search) ) {
-                
-                newVector.add(s);
-            }
-        }
-}**/
 }
