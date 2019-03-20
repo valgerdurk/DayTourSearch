@@ -1,7 +1,7 @@
 /*
  *Guðrún Stella Ágústsdóttir, Háskóli Íslands
  */
-package DayTourFx;
+package DayTour;
 
 import DayTour.TourInfo;
 import java.util.LinkedHashSet;
@@ -34,7 +34,6 @@ private ObservableList<TourInfo> regionItems;
         }  
    
         regionItems = FXCollections.observableArrayList();
-        // Setjum dagskrár í módelið 
         for (Object l: region)
             regionItems.add(l.toString());
    */    

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DayTourFx;
+package DayTour;
 
 import DayTour.InfoCache;
 import DayTour.TourInfo;
@@ -39,7 +39,7 @@ public class DayTourMainController implements Initializable {
     @FXML
     private MultipleSelectionModel msl;
     private ListView<TourInfo> list;
-    ObservableList<TourInfo> listview = FXCollections.observableArrayList();
+    ObservableList<TourInfo> listv = FXCollections.observableArrayList();
 
     Image img = new Image(" ");
     
@@ -74,7 +74,7 @@ public class DayTourMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        list.setItems(listview);
+        list.setItems(listv);
         GridPane pane = new GridPane();
         Label title = new Label("h");
         pane.add(list,    0, 0);
@@ -84,7 +84,7 @@ public class DayTourMainController implements Initializable {
             public void updateItem(ListView<TourInfo> list, boolean empty) {
                 super.updateListView(list);
                 if(title != null) {
-                    list.setItems(listview);
+                    list.setItems(listv);
                     pic.setImage(img);
                 }
             }

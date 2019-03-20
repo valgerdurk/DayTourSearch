@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DayTourFx;
+package DayTour;
 
 import DayTour.TourInfo;
 import java.net.URL;
@@ -37,7 +37,7 @@ public class SearchWindowController implements Initializable {
      * @param search SearchString
      * @return return results as a string 
      */
-     private ObservableList<TourInfo> chooseRegion(ObservableList<TourInfo> tour, String search) {
+  /*   private ObservableList<TourInfo> chooseRegion(ObservableList<TourInfo> tour, String search) {
         ObservableList<TourInfo> newVector = FXCollections.observableArrayList();
       
         for (TourInfo s : tour) {
@@ -47,5 +47,5 @@ public class SearchWindowController implements Initializable {
                 newVector.add(s);
             }
         }
-}
+}*/
 }
