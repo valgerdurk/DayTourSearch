@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="jAnchor" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DayTourFx.DayTourMainController">
+    <stylesheets>
+        <URL value="@/styles/dagsferd.css" />
+    </stylesheets>
+    <children>
+      <BorderPane layoutY="-1.0" prefHeight="768.0" prefWidth="1024.0">
+         <center>
+            <ScrollPane prefHeight="641.0" prefWidth="761.0" BorderPane.alignment="CENTER">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1500.0" prefWidth="939.0">
+                     <children>
+                        <ListView fx:id="list" layoutX="2.0" prefHeight="1721.0" prefWidth="641.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+            </Button>
+         </bottom>
+         <top>
+            <HBox prefHeight="25.0" prefWidth="574.0" BorderPane.alignment="CENTER">
+               <children>
+                  <fx:include fx:id="flokkur" source="RegionCombo.fxml" />
+                  <fx:include fx:id="verd" source="PriceCombo.fxml" />
+                  <fx:include fx:id="leita" source="SearchWindow.fxml" />
+                  <fx:include fx:id="dagur" source="DayPicker.fxml" />
+               </children>
+               <BorderPane.margin>
+                  <Insets top="3.0" />
+               </BorderPane.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+         </top>
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+      </BorderPane>
+    </children>
+   <opaqueInsets>
+      <Insets top="3.0" />
+   </opaqueInsets>
+</AnchorPane>
