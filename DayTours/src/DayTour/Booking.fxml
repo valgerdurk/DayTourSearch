@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="booking" minHeight="711.0" prefHeight="719.0" prefWidth="943.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="DayTour.BookingController">
+  <children>
+    <ImageView fx:id="image" fitHeight="386.9999959561508" fitWidth="515.9999389648438" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+    <Button fx:id="bookNowButton" layoutX="678.0" layoutY="393.0" mnemonicParsing="false" onAction="#handleBook" prefHeight="42.0" prefWidth="162.0" text="Book now">
+      <font>
+        <Font size="20.0" fx:id="x1" />
+      </font>
+    </Button>
+    <Label id="price" font="$x1" layoutX="9.0" layoutY="437.0" prefWidth="135.0" text="Price per adult:" visible="true" />
+    <Label id="duration" font="$x1" layoutX="276.0" layoutY="437.0" prefWidth="82.0" text="Duration:" />
+    <Label fx:id="price" font="$x1" layoutX="157.0" layoutY="437.0" prefWidth="68.0" text="" />
+    <Label id="price" fx:id="duration" font="$x1" layoutX="373.0" layoutY="437.0" prefHeight="24.0001220703125" prefWidth="45.0" text="" />
+    <Label id="price" font="$x1" layoutX="406.0" layoutY="437.0" prefWidth="54.000099999997474" text="hours" />
+    <Label fx:id="title" layoutX="9.0" layoutY="401.0" prefHeight="34.0" prefWidth="474.0" text="">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Label>
+    <Label fx:id="about" font="$x1" layoutX="9.0" layoutY="475.0" prefHeight="244.0" prefWidth="920.0" text="" wrapText="true" />
+    <Label font="$x1" layoutX="679.0" layoutY="153.0" prefHeight="51.0" prefWidth="226.0" text="Number of travelers" />
+    <ComboBox fx:id="nTravelers" layoutX="679.0" layoutY="204.0" onAction="#getSeatQt" pickOnBounds="false" prefWidth="152.0" promptText="1">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <DatePicker fx:id="datePick" layoutX="679.0" layoutY="106.0" prefHeight="27.0" prefWidth="152.0" />
+    <Label font="$x1" layoutX="679.0" layoutY="57.0" prefHeight="42.0" prefWidth="162.0" text="Pick a date" />
+    <Label id="price" fx:id="updatedPrice" font="$x1" layoutX="740.0" layoutY="249.0" prefWidth="68.0" text="" />
+    <Label id="price" font="$x1" layoutX="678.0" layoutY="249.0" prefWidth="67.9998779296875" text="Total: " />
+    <fx:include fx:id="cart" source="Cart.fxml" disable="false" focusTraversable="false" layoutX="6.0" layoutY="631.0" minHeight="247.0" opacity="1.0" prefHeight="247.0" prefWidth="985.0" visible="false" />
+    <CheckBox fx:id="hotelPickup" layoutX="679.0" layoutY="360.0" mnemonicParsing="false" onDragDetected="#hotelPickup" prefWidth="250.0" text="Pick me up at my hotel">
+      <font>
+        <Font size="15.0" />
+      </font>
+    </CheckBox>
+  </children>
+</AnchorPane>
