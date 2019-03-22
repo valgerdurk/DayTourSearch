@@ -17,11 +17,7 @@ import java.util.ArrayList;
 public class InfoCache {
     private List<TourInfo>          tours;
     private List<BookingInfo>       bookings;
-    
-    // Basic check to enforce that only a single InfoCache
-    //  exists.  Multiple copies of this class will result
-    //  in all sorts of issues with TourIDs.
-    private static boolean          isMade = false;
+
     
     // NOTE: This method assumes a list of VALID bookings,
     //        e.g. all bookings refer to a valid day for
@@ -144,16 +140,7 @@ public class InfoCache {
     }
     
     public InfoCache() {
-        // Just a quick and dirty confirmation that the 
-        //  InfoCache object is only constructed once.
-        if (!isMade) {
-            tours = new ArrayList<>();
-            bookings = new ArrayList<>();
-            isMade = true;
-        }
-        else {
-            tours = null;
-            bookings = null;
-        }
+        tours = new ArrayList<>();
+        bookings = new ArrayList<>();
     }
 }
