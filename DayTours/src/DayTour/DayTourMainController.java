@@ -5,24 +5,25 @@
  */
 package DayTour;
 
-import DayTour.InfoCache;
-import DayTour.TourInfo;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 /**
@@ -35,13 +36,19 @@ public class DayTourMainController implements Initializable {
     @FXML
     private AnchorPane jAnchor;
     private InfoCache info;
-    private RegionComboController regionComboController;
+    
     @FXML
-    private MultipleSelectionModel msl;
     private ListView<TourInfo> list;
+    private int index = 0;
     ObservableList<TourInfo> listv = FXCollections.observableArrayList();
 
     Image img = new Image(" ");
+    @FXML
+    private DatePicker dagurAfmarka;
+    @FXML
+    private ComboBox<TourInfo> verdAfmarka;
+    @FXML
+    private ComboBox<TourInfo> region;
     
     static class Cell extends ListCell<TourInfo> {
         HBox hbox = new HBox();
@@ -90,4 +97,20 @@ public class DayTourMainController implements Initializable {
             }
         });
     }
-}
+
+    
+    
+/*           
+    private static final String REGION = "Region";
+    
+        void chooseRegion(ObservableList<TourInfo> chosenReligion) {
+        list.setItems(chosenReligion);
+    }   
+*/
+           
+
+
+
+ }
+    
+
