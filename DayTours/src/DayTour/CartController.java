@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 /**
@@ -24,8 +25,6 @@ import javafx.scene.text.Font;
  */
 public class CartController implements Initializable {
 
-    @FXML
-    private AnchorPane cart;
     @FXML
     private Label title;
     @FXML
@@ -41,8 +40,19 @@ public class CartController implements Initializable {
     @FXML
     private Button remove;
     @FXML
-    private CheckBox checkRemove;
+    private AnchorPane booking;
+    @FXML
+    private VBox bookings;
+    @FXML
+    private Label cartEmptyLabel;
+    
+    
+    private boolean removeTour = false;
+  
+    //private Cart cart;
 
+    // TO-DO gera snyrtilegra og skjala betur
+    
     /**
      * Initializes the controller class.
      */
@@ -52,21 +62,33 @@ public class CartController implements Initializable {
     }    
     
     /**
-     * 
-     * @param btitle 
-     * @param bdate 
-     * @param bprice 
-     * @param btravelers 
+     * Presents booking in cart
+     * TO-DO implement for more than one booking
      */
     public void makeBooking(String btitle,LocalDate bdate,String bprice,Object btravelers) {
+        booking.setVisible(true);
+        
         title.setText(btitle);
         date.setText(bdate.toString());
         price.setText(bprice);
         noTravelers.setText(btravelers.toString());
     }
-
+    
+    /*
+    * Removes all bookings marked for removal
+    * TO-DO implement for more than one booking
+    */
     @FXML
     private void removeBooking(ActionEvent event) {
+        if (removeTour) {
+            bookings.getChildren().remove(booking);
+            //cart.removeBooking(0);
+            cartEmptyLabel.setVisible(true);
+        }
+    } 
+
+    @FXML
+    private void checkRemove(ActionEvent event) {
+        removeTour = true;
     }
-    
 }

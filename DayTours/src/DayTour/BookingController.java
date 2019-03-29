@@ -5,7 +5,6 @@
  */
 package DayTour;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,17 +14,22 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -43,8 +47,6 @@ public class BookingController implements Initializable {
     @FXML
     private Button bookNowButton;
     @FXML
-    private Font x1;
-    @FXML
     private Label price;
     @FXML
     private Label duration;
@@ -61,9 +63,27 @@ public class BookingController implements Initializable {
     @FXML
     private CheckBox hotelPickup;
     @FXML
+    private Pane bDialog;
+    @FXML
+    private Font x2;
+    @FXML
     private CartController cartController;
+    @FXML
+    private Font x1;
+    @FXML
+    private TextField bname;
+    @FXML
+    private TextField bhotel;
     
-    private InfoCache tours = new InfoCache();
+    // TO-DO gera snyrtilegra og skjala betur
+    
+    //private Cart cart = new Cart();
+    
+    //private TourInfo tour; 
+    
+    private boolean pickup = false;
+    
+    
 
     /**
      * Initializes the controller class.
@@ -73,51 +93,114 @@ public class BookingController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         nTravelers.getItems().removeAll(nTravelers.getItems());
         nTravelers.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+        
         DatePicker datePicker = new DatePicker();
         
         datePicker.setOnAction(event -> {
-        LocalDate date = datePicker.getValue();
-        System.out.println("Selected date: " + date);
+            LocalDate date = datePicker.getValue();
         });
-        
-        initTest();
-        
-        // Modification via dff
-        // cartController = new CartController();
     }
     
-    public void initTest() {
-        // Test tour for booking system
+    /*
+     * Presents the chosen tour from the main page
+     */
+    public void showTour(String btitle, int bprice, int bduration, String babout) {
+        title.setText(btitle);
+        price.setText(Integer.toString(bprice));
+        duration.setText(Integer.toString(bduration));
+        about.setText(babout);
         
-        tours.LoadFromDisk("tourdata.dat");
-    
-        System.out.println(tours.AllTours().get(0).title);
-     
-        title.setText(tours.AllTours().get(0).title);
-        price.setText(Integer.toString(tours.AllTours().get(0).priceISK));
-        duration.setText(Integer.toString(tours.AllTours().get(0).durationHours));
-        about.setText(tours.AllTours().get(0).description);
-        
-        //Image img = new Image(tours.AllTours().get(0).img);
-        //image.setImage(img); 
+        //Image image = new Image(img);
+        //image.setImage(image); 
     }
     
-
+    /*
+     * A dialog for name and hotel information
+     * Adds booking to cart 
+     */
+    private void bookingDialog () {
+        DialogPane p = new DialogPane();
+        bDialog.setVisible(true);
+        
+        p.setContent(bDialog);
+        
+        Dialog d = new Dialog();
+        
+        d.setDialogPane(p);
+        
+        // Add to cart button made
+        ButtonType addToCart = new ButtonType("Add to cart", ButtonBar.ButtonData.OK_DONE);
+        d.getDialogPane().getButtonTypes().add(addToCart);
+        
+        final Node cart = p.lookupButton(addToCart);
+        cart.disableProperty()
+                .bind(bname.textProperty().isEmpty());
+        
+        Optional<ButtonType> result = d.showAndWait();
+        if (result.isPresent() && (result.get()
+                .getButtonData() == ButtonBar.ButtonData.OK_DONE)) {
+        } else {
+            // villumelding
+        }
+        addToCart();
+    }
+    
+    
+    /*
+    * Handler for the choose travelers ComboBox
+    * Updates total price according to chosen quantity
+    */
     @FXML
-    private void getSeatQt(ActionEvent event) {
-        int travelers = Integer.valueOf((String)nTravelers.getValue());
+    private void chooseSeats(ActionEvent event) {
+        int travelers = getSeatQt();
         int total = Integer.parseInt(price.getText())*travelers;
         updatedPrice.setText(Integer.toString(total));
-        System.out.println(updatedPrice);
-    }    
+    }
+     
+    /**
+     * Extracts the number of travelers chosen
+     * @return number of travelers
+     */
+    private int getSeatQt() {
+        int travelers = Integer.valueOf((String)nTravelers.getValue());
+        return travelers;
+    }
         
     /**
-     * Adds booking to cart
-     * Booking is made with current input information
+     * Handler for the "Book now" button
+     * Opens the booking dialog if tour is available on chosen date
      * @param event 
      */
     @FXML
-    private void handleBook(ActionEvent event) {
+    private void handleBook() {
+       bookingDialog();
+       
+       // TO-DO villumeldingar
+    } 
+    
+    /**
+     * Handler for hotel pickup check-box
+     * If checked pickup is set as true
+     * @param event 
+     */
+     @FXML
+    private void hotelPickup(MouseEvent event) {
+        pickup = true;
+    }
+    
+    /**
+     * 
+     * @param date
+     * @return 
+     */
+    private int parseDate(LocalDate date) {
+        return 0;
+    }
+    
+    /**
+     * TO-DO make booking in Cart.java
+     */
+    private void addToCart() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Cart.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
@@ -128,12 +211,10 @@ public class BookingController implements Initializable {
         } catch (Exception e) {
             System.out.println("Can't load new window" + e.getMessage());
         }
+         
+        int date = parseDate(datePick.getValue());
+        int travelers = getSeatQt();
         
         cartController.makeBooking(title.getText(), datePick.getValue(), updatedPrice.getText(), nTravelers.getValue());
-    } 
-
-    @FXML
-    private void hotelPickup(MouseEvent event) {
     }
-    
 }

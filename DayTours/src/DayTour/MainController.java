@@ -5,19 +5,14 @@
  */
 package DayTour;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -27,6 +22,15 @@ import javafx.stage.Stage;
  * @author Valgerdur Kristinsdottir <vak9@hi.is>
  */
 public class MainController implements Initializable {
+    
+    private BookingController bookingController;
+    
+    private InfoView tours;
+  
+    @FXML
+    private TextField searchInput;
+    @FXML
+    private AnchorPane rootPane;
     
     /**
      * Initializes the controller class.
@@ -45,12 +49,25 @@ public class MainController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Booking.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
+            bookingController = fxmlLoader.getController();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));  
             stage.show();
         } catch (Exception e) {
-            System.out.println("Can't load new window");
+            System.out.println("Can't load new window" + e.getMessage());
         }
+        
+        tours = new InfoView();
+        tours.init();
+        
+        List<TourInfo> displayedTours = tours.SearchByText(searchInput.getText());
+        
+        String title = displayedTours.get(0).title;
+        int price = displayedTours.get(0).priceISK;
+        int duration = displayedTours.get(0).durationHours;
+        String about = displayedTours.get(0).description;
+        
+        bookingController.showTour(title, price, duration, about);
     }
      
 }

@@ -5,10 +5,31 @@
  */
 package DayTour;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * @author David Francis <dff1@hi.is>
+ * @author Valgerdur Kristinsdottir <vak9@hi.is>
  */
 public class Cart {
     
+    private List<BookingInfo> pending = new ArrayList<BookingInfo>();
+    private BookingInfo booking;
+    
+    /**
+     * Adds booking to list of bookings in Cart
+     */
+    public void makeBooking(int day, int seats, String name, boolean pickup, String pickLocation, TourInfo tour) {
+        booking = new BookingInfo(day, seats, name, pickup, pickLocation, tour);
+        pending.add(booking);
+    }
+    
+    /**
+     * Removes booking from list of bookings in Cart
+     * @param target 
+     */
+    public void removeBooking(int target) {
+        pending.remove(target);
+    }          
 }
