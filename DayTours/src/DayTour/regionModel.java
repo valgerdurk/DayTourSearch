@@ -3,55 +3,53 @@
  */
 package DayTour;
 
-import DayTour.TourInfo;
 import java.util.LinkedHashSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * A class that includes all tours by specyfic region that the user selects
- * Region is a getter from a database from InfoCache/TourInfo?
+ * Klasi sem heldur utan um keppnisdagsrká riðlanna sem notandi getur valið úr
+ * Riðlarnir eru fengnir úr gögnum um fótboltadagskrá
  * 
  * @author Guðrún Stella Ágústsdóttir, Háskóli Íslands, gsa15@hi.is
  */
 public class regionModel {
-private ObservableList<TourInfo> regionItems;
+private ObservableList<String> regionItems;
 
 
     /**
-     * Constructor for regionModel. Gets all tours
-     * Filters out set of region
-     * @param regionTours
+     * Smiður fyrir flokkurModel. Tekur inn alla keppni
+     * Síar út mengi af riðlum
+     * @param dLeikir
      */
- public regionModel(ObservableList<TourInfo> regionTours) {
+ public regionModel(ObservableList<TourInfo> tRegion) {
         
-        /*
-        LinkedHashSet region = new LinkedHashSet();
-        region.add("Region");
-        for (TourInfo r: regionTours) {    
-                String u = r.getRegion();
-                region.add(u);
+        // Náum í dagskrá
+        LinkedHashSet tour = new LinkedHashSet();
+        tour.add("Region");
+        for (TourInfo r:tRegion) {    
+                Region u = r.region;
+                tour.add(u);
         }  
    
         regionItems = FXCollections.observableArrayList();
-        for (Object l: region)
+        // Setjum dagskrár í módelið 
+        for (Object l:tour)
             regionItems.add(l.toString());
-   */    
+       
     }
 
  
     /*
-     *Methods getter and setter to fetch tours by region
-     *and appear it
+     *Aðferðir getter og setter til að sækja dagskráliði keppninnar
+     *og birta þá
     */
  
-    public ObservableList<TourInfo> getItems() {
+    public ObservableList<String> getItems() {
        return regionItems;
     }
     
-    public void setItems(ObservableList<TourInfo> o) {
+    public void setItems(ObservableList<String> o) {
        regionItems = o;
     }
-
-    
 }
