@@ -26,7 +26,7 @@ public enum Region {
                 return Region.SOUTH;
                 
             case "west":
-            case "WEST":            
+            case "WESTCOAST":            
                 return Region.WESTCOAST;
                 
             case "westfjords":      
