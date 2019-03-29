@@ -98,10 +98,11 @@ public class InfoViewTest {
         InfoView iv = new InfoView();
         assertEquals(true, iv.init());
         
-        //test negative result
+        //Test negative result
         List<TourInfo> negResult = iv.SearchByRegion(Region.UNDEFINED);
         assertEquals(0, negResult.size());
-        //region enum matches
+        
+        //Test Region enum matches
         List<TourInfo> regionResult = iv.SearchByRegion(Region.WESTCOAST);
         assertEquals(6, regionResult.size());
         assertEquals("Glymur Waterfall Hike", regionResult.get(0).title);
@@ -124,6 +125,21 @@ public class InfoViewTest {
      */
     @Test
     public void testSearchByDuration() {
+        InfoView iv = new InfoView();
+        assertEquals(true, iv.init());
+        
+        //Test negative result
+        List<TourInfo> negResult = iv.SearchByDuration(-1);
+        assertEquals(0, negResult.size());
+        
+        //Test duration matching
+        List<TourInfo> durationResult = iv.SearchByDuration(2);
+        assertEquals(5, durationResult.size());
+        assertEquals("Amphibian Boat Tour on Jökulsárlón", durationResult.get(0).title);
+        assertEquals("Kayaking Under Mt. Kirkjufell", durationResult.get(1).title);
+        assertEquals("Westman Island Rib Boat Tour", durationResult.get(2).title);
+        assertEquals("Kaldi Beer Spa", durationResult.get(3).title);
+        assertEquals("Fisherman's Food Trail", durationResult.get(4).title);
     }
 
     /**
