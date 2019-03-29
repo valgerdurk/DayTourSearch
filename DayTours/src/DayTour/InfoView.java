@@ -17,11 +17,11 @@ public class InfoView {
         tours = new InfoCache();
     }
     public boolean init() {
-        return tours.LoadFromDisk("TourData.dat");
+        return tours.LoadFromDisk("tourdata.dat");
     }
     /**
      * Aðferð sem leitar að ferðum eftir tegund ferðar
-     * @param type heitir á tegund ferðar
+     * @param type heitir á tegund ferðar 
      * @return list af ferðum 
      */
     public List<TourInfo> SearchByType(TourType type) {
@@ -34,18 +34,23 @@ public class InfoView {
         return typeList;
     }
     public List<TourInfo> SearchByText(String txt) {
-        List<TourInfo> txtList = new ArrayList<TourInfo>(); 
-        
-        for (TourInfo t : tours.AllTours()) { 
-            if (t.title.matches("*" + txt + "*")) {
-                txtList.add(t);
-            }
-            else if (t.HasTag(txt)) {
-                txtList.add(t);
-            }
-        }
-        return txtList;
+       List<TourInfo> txtList = new ArrayList<TourInfo>();
+
+       String regex = ".*" + txt.toLowerCase() + ".*";
+
+       for (TourInfo t : tours.AllTours()) {
+           if (t.title.toLowerCase().matches(regex)) {
+               txtList.add(t);
+           }
+           else if (t.HasTag(txt)) {
+               txtList.add(t);
+           }
+       }
+       return txtList;
     }
+    
+    
+    
     public List<TourInfo> SearchByRegion (Region r) {
         List<TourInfo> rList = new ArrayList<TourInfo>(); 
         for (TourInfo t : tours.AllTours()) {
