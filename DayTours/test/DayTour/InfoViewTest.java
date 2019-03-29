@@ -95,6 +95,21 @@ public class InfoViewTest {
      */
     @Test
     public void testSearchByRegion() {
+        InfoView iv = new InfoView();
+        assertEquals(true, iv.init());
+        
+        //test negative result
+        List<TourInfo> negResult = iv.SearchByRegion(Region.UNDEFINED);
+        assertEquals(0, negResult.size());
+        //region enum matches
+        List<TourInfo> regionResult = iv.SearchByRegion(Region.WESTCOAST);
+        assertEquals(6, regionResult.size());
+        assertEquals("Glymur Waterfall Hike", regionResult.get(0).title);
+        assertEquals("Kayaking Under Mt. Kirkjufell", regionResult.get(1).title);
+        assertEquals("Ferry Trip tp Grímsey", regionResult.get(2).title);
+        assertEquals("Langjökull Glacial Wonderland", regionResult.get(3).title);
+        assertEquals("Snæfellsjökull Glacial Summit Hike", regionResult.get(4).title);
+        assertEquals("The Story of Skyr", regionResult.get(5).title);
     }
 
     /**
