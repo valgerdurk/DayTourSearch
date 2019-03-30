@@ -56,20 +56,7 @@ public class InfoViewTest {
         // Testing negative result
         List<TourInfo> negResult = iv.SearchByType(TourType.UNDEFINED);
         
-       // assertEquals(0, negResult.size());
-        
-        
-        // Testing of tour type: hiking
-       /** List<TourInfo> hikingResult = iv.SearchByType(TourType.HIKING);
-        
-        assertEquals(6, hikingResult.size());
-        
-        assertEquals("Þórsmörk Volcano Hike", hikingResult.get(0).title);
-        assertEquals("Glymur Waterfall Hike", hikingResult.get(1).title);
-        assertEquals("Valley to Valley Hiking Tour in the Westfjords", hikingResult.get(2).title);
-        assertEquals("Esja Hiking Tour", hikingResult.get(3).title);
-        assertEquals("Stórurð Hike", hikingResult.get(4).title);
-        assertEquals("Hornstrandir Hiking Tour", hikingResult.get(5).title);**/
+        assertEquals(0, negResult.size());
         
         // Testing of tour type: food
         List<TourInfo> foodResult = iv.SearchByType(TourType.FOOD);
