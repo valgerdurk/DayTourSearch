@@ -3,33 +3,23 @@ package DayTour;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import static java.util.Collections.list;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.util.Callback;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  * FXML Controller class
@@ -38,8 +28,6 @@ import javax.swing.SwingUtilities;
  */
 public class DayTourController implements Initializable {
 
-    @FXML
-    private ListView<TourInfo> listTour;        //listi yfir fótboltadagskrá
     private final int id = 0;                        //fáum núverandi stöðu á dagskrálið
    
     @FXML
@@ -52,40 +40,53 @@ public class DayTourController implements Initializable {
     
     @FXML
     private DatePicker datePicker;
+    
     private final Label title = new Label();
     private final Label price = new Label(); 
     private final Label duration = new Label();
+    
     private final HBox hbox = new HBox();
     private final Pane pane = new Pane();
     private final String img = new String();
 
     //for regionCombo window
     private static final String REGION = "Region";
+    private static final String PRICE = "Price";
+    @FXML
+    private Button search;
+    
+    @FXML
+    private ListView<String> list;    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-     //   tours.LoadFromDisk("tourinfo.dat") = new DagskraKatalogur();         //hlutur til að geta náð í gögnin    
-        initializeRegionCombo();      
-        //appearList(tours.AllTours().get(id));       
-        //TourInfo e = null;
+        initializeRegionCombo();
+        initializePriceCombo();
+        regionCombo.getItems().removeAll(regionCombo.getItems());
+        regionCombo.getItems().addAll("westfjords","east","north","capital area","south","west" );
+        tours.LoadFromDisk("tourdata.dat");
+        
         datePicker.setOnAction(event -> {
         LocalDate date = datePicker.getValue();
         System.out.println("Selected date: " + date);
         });
-        String region = new String();                                //?????????????
-        region.indexOf("tourdata.dat");                              //?????????????
-        regionCombo.getItems().add(region);                          //?????????????
-        regionCombo.getItems().removeAll(regionCombo.getItems());
-        tours.AllTours();            //get all list from InfoCache     ????????????????
-        initializeVariables();       //initialize variables
+        
+        String price = new String();                                //?????????????
+        int indexOfPrice = price.indexOf(id); //?????????????
+        priceCombo.getItems().add(price);                          //?????????????
+        priceCombo.getItems().removeAll(priceCombo.getItems());
+        tours.AllTours();            //get all list from InfoCache     ???????????????
 }
     /**
      * make data appear when we choose a tour
-     * @param r one tour with many elements 
+     * @param btitle
+     * @param bprice
+     * @param bduration 
      */
-    private void appearList(TourInfo g) {
-        System.out.println("All Tours:");
-        System.out.println("Title " + g.ID);        
+    private void appearList(String btitle, int bprice, int bduration) {
+        list.getItems().setAll(btitle);
+        price.setText(Integer.toString(bprice));
+        duration.setText(Integer.toString(bduration));
     }
     /***
      * Handler to take a look at a specific tour
@@ -102,9 +103,8 @@ public class DayTourController implements Initializable {
     }
 */
     /***
-     * Handler to dlete specific tour
+     * Handler to delete specific tour
      */
-    @FXML
     private void deleteList(ActionEvent event) {
         if (id != -1) {
             TourInfo n = tours.AllTours()
@@ -119,15 +119,7 @@ public class DayTourController implements Initializable {
     void listControle(ObservableList<TourInfo> selectedItems) {
         tours.AllTours().addAll(id, selectedItems);
     }
-    /**
-     * initialize data and actionEvent for list of tours 
-     */
-    private void initializeVariables() {
-        //TourInfo ti = tours.TourFromID(id); //To change body of generated methods, choose Tools | Templates.
-       // ti.AddActivity(TourType.SIGHTS);
- //       id = ti.ID;
-        tours.LoadFromDisk("tourdata.dat");
-    }
+    
     /**
      * fetch list from InfoCache
      */
@@ -135,9 +127,78 @@ public class DayTourController implements Initializable {
         ObservableList<TourInfo> listTours = FXCollections.observableArrayList(tours.AllTours());
         return listTours;
     }
+    
     private void initializeRegionCombo() {
+      DayTourController d = new DayTourController();
+      SingleSelectionModel<String> tsl = regionCombo.getSelectionModel();      
+      //SingleSelectionModel tsl = regionCombo.getSelectionModel();
+      tsl.select(REGION); 
+      //tsl.selectedItemProperty().addListener(new ChangeListener<String> () {
+       /*     @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                 ObservableList<TourInfo> obl = d.AllTours();
+                 ObservableList<TourInfo> selectedRegion = null;
+                 if (newValue == null) {
+                    return;
+                }
+                if (newValue.equals(REGION))  {
+                    selectedRegion = obl;
+                } else {
+                     Predicate<TourInfo> predicate = null;
+                    selectedRegion = AllTours().filtered(predicate);
+                }
+                d.filterByRegion(selectedRegion);
+            }
+        });  */  
+         
+    }
+   
+    private void filterByRegion(ObservableList<TourInfo> selectedRegion) {
+        tours.AllTours().addAll(selectedRegion);            //???????????
+    }
+    
+          
+   /* @FXML
+    private void handleSearch(javafx.event.ActionEvent event) {
+        String search = ((TextField)event.getSource()).getText();
+        ObservableList<TourInfo> newList = null;
+        ObservableList<TourInfo> r = (ObservableList<TourInfo>) list.getSelectionModel().getSelectedItems();
+        if (search.equals(" ")) {
+            newList = r;
+        } 
+        /*else {
+            newList = veljaLid(r, leitarstrengur);
+        }
+        filterByRegion(newList);
+    }*/
+
+    /***
+     * Chooses by value of price
+     * @param pricepick
+     * @param priceI
+     * @return 
+     */
+    private ObservableList<TourInfo> searchByPrice(ObservableList<TourInfo> pricepick, int priceI) {
+        ObservableList<TourInfo> newVector = FXCollections.observableArrayList();
+        
+        pricepick.stream().filter((s) -> ( priceP(s.priceISK).equals(priceI))).forEachOrdered((s) -> {
+            newVector.add(s);
+        });
+        return newVector;
+    }
+    
+    /**
+     * returns price
+     * @param group
+     * @return 
+     */
+    private Object priceP(int group) {
+        return group;
+    }
+
+    private void initializePriceCombo() {
     DayTourController d = new DayTourController();    
-    SingleSelectionModel tsl = regionCombo.getSelectionModel();
+    SingleSelectionModel tsl = priceCombo.getSelectionModel();
         tsl.selectedItemProperty().addListener(new ChangeListener<String> () {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -146,30 +207,21 @@ public class DayTourController implements Initializable {
                  if (newValue == null) {
                     return;
                 }
-                if (newValue.equals(REGION))  {
+                if (newValue.equals(PRICE))  {
                     selectedItems = obl;
                 } else {
                      Predicate<TourInfo> predicate = null;
                     selectedItems = AllTours().filtered(predicate);
                 }
-                d.filterByRegion(selectedItems);
+                d.filterByPrice(selectedItems);
             }          
         });    
-        
-//        setDayTourController();
-        //regionCombo.getSelectionModel().selectFirst();
+         
     }
+    
 
-    private void filterByRegion(ObservableList<TourInfo> selected) {
+    private void filterByPrice(ObservableList<TourInfo> selected) {
         tours.AllTours().get(id);                                    //???????????
+       
     }
-
-    /**
-     * puts specific regions in the combobox
-     */
-    private void setDayTourController() {
-        regionModel regions = new regionModel((ObservableList<TourInfo>) tours.AllTours());
-        regionCombo.getSelectionModel().select(null);
-        regionCombo.setItems(regions.getItems());
-    }
-    }
+}
