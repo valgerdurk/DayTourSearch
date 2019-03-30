@@ -5,6 +5,8 @@
  */
 package DayTour;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -137,6 +139,23 @@ public class InfoViewTest {
      */
     @Test
     public void testSearchByPrice() {
+               InfoView iv = new InfoView();
+        assertEquals(true, iv.init());
+
+        //Test negative result
+        List<TourInfo> negResult = iv.SearchByPrice(-1);
+        assertEquals(0, negResult.size());
+        
+        List<TourInfo> priceResult = iv.SearchByPrice(2);
+        assertEquals(8, priceResult.size());
+        assertEquals("Tröllakrókar Canyon Tour", priceResult.get(0).title);
+        assertEquals("Glacier Snowmoiling from Dalvík", priceResult.get(1).title);
+        assertEquals("The Highland Circle", priceResult.get(2).title);
+        assertEquals("Fox Watching in Hornstrandir", priceResult.get(3).title);
+        assertEquals("Hornstrandir Hiking Tour", priceResult.get(4).title);
+        assertEquals("Þórsmörk Volcano Hike", priceResult.get(5).title);
+        assertEquals("The Story of Skyr", priceResult.get(6).title);
+        assertEquals("Langjökull Glacial Wonderland", priceResult.get(4).title);    
     }
 
     /**
