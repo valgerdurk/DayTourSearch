@@ -19,6 +19,7 @@ public enum TourType {
     
     public static TourType Interpret(String type) {
         switch (type) {
+            case "hike":
             case "hiking":
             case "HIKING":
                 return TourType.HIKING;

@@ -117,7 +117,7 @@ public class Parser {
                 break;
 
             case "type":
-                if (value.matches("\\[*\\],")) {
+                if (value.matches("\\[.*\\],")) {
                     String[] list = List(value);
                     
                     for (String s : list) {
