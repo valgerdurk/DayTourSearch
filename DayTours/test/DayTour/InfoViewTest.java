@@ -50,6 +50,38 @@ public class InfoViewTest {
      */
     @Test
     public void testSearchByType() {
+        InfoView iv = new InfoView();
+        assertEquals(true, iv.init());
+        
+        // Testing negative result
+        List<TourInfo> negResult = iv.SearchByType(TourType.UNDEFINED);
+        
+       // assertEquals(0, negResult.size());
+        
+        
+        // Testing of tour type: hiking
+       /** List<TourInfo> hikingResult = iv.SearchByType(TourType.HIKING);
+        
+        assertEquals(6, hikingResult.size());
+        
+        assertEquals("Þórsmörk Volcano Hike", hikingResult.get(0).title);
+        assertEquals("Glymur Waterfall Hike", hikingResult.get(1).title);
+        assertEquals("Valley to Valley Hiking Tour in the Westfjords", hikingResult.get(2).title);
+        assertEquals("Esja Hiking Tour", hikingResult.get(3).title);
+        assertEquals("Stórurð Hike", hikingResult.get(4).title);
+        assertEquals("Hornstrandir Hiking Tour", hikingResult.get(5).title);**/
+        
+        // Testing of tour type: food
+        List<TourInfo> foodResult = iv.SearchByType(TourType.FOOD);
+        
+        assertEquals(6, foodResult.size());
+        
+        assertEquals("Kaldi Beer Spa", foodResult.get(0).title);
+        assertEquals("Icelandic Beer Tasting and River Rafting", foodResult.get(1).title);
+        assertEquals("Reykjavík Food Walk", foodResult.get(2).title);
+        assertEquals("Fisherman's Food Trail", foodResult.get(3).title);
+        assertEquals("The Story of Skyr", foodResult.get(4).title);
+        assertEquals("Reykjavík Bar Crawl", foodResult.get(5).title);
     }
 
     /**
