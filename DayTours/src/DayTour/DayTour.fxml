@@ -6,26 +6,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="DayTour.DayTourController">
-   <children>
-      <BorderPane prefHeight="768.0" prefWidth="1024.0">
-         <top>
-            <HBox prefHeight="35.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ComboBox fx:id="regionCombo" prefHeight="35.0" prefWidth="150.0" promptText="Region" />
-                  <ComboBox fx:id="priceCombo" prefHeight="35.0" prefWidth="150.0" promptText="Price" />
-                  <DatePicker fx:id="datePicker" prefHeight="35.0" prefWidth="150.0"></DatePicker>
-               </children>
-            </HBox>
-         </top>
-         <center>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <content>
-                  <ListView fx:id="list" prefHeight="1200.0" prefWidth="1022.0" />
-               </content>
-            </ScrollPane>
-         </center>
-      </BorderPane>
-   </children>
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="DayTour.DayTourController">
+  <children>
+    <BorderPane prefHeight="768.0" prefWidth="1024.0">
+      <center>
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+          <content>
+            <ListView fx:id="list" onMouseClicked="#chooseTour" prefHeight="1200.0" prefWidth="1022.0" />
+          </content>
+        </ScrollPane>
+      </center>
+      <top>
+        <HBox prefHeight="35.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+          <children>
+            <ComboBox fx:id="regionCombo" prefHeight="35.0" prefWidth="150.0" promptText="Region" />
+            <ComboBox fx:id="priceCombo" prefHeight="35.0" prefWidth="150.0" promptText="Price" />
+            <DatePicker fx:id="datePicker" prefHeight="35.0" prefWidth="150.0" />
+            <TextField fx:id="searchInput" prefHeight="36.0" prefWidth="197.0" />
+            <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" text="Search" />
+          </children>
+        </HBox>
+      </top>
+    </BorderPane>
+  </children>
 </AnchorPane>

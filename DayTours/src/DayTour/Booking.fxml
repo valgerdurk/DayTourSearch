@@ -40,11 +40,11 @@
     </ComboBox>
     <DatePicker fx:id="datePick" layoutX="679.0" layoutY="106.0" prefHeight="27.0" prefWidth="152.0" />
     <Label font="$x2" layoutX="679.0" layoutY="57.0" prefHeight="42.0" prefWidth="162.0" text="Pick a date" />
-    <Label id="price" fx:id="updatedPrice" font="$x2" layoutX="740.0" layoutY="249.0" prefWidth="68.0" text="" />
+    <Label id="price" fx:id="updatedPrice" font="$x2" layoutX="736.0" layoutY="249.0" prefWidth="68.00009999999747" text="" />
     <Label id="price" font="$x2" layoutX="678.0" layoutY="249.0" prefWidth="67.9998779296875" text="Total: " />
     <fx:include fx:id="cart" source="Cart.fxml" disable="false" focusTraversable="false" layoutX="6.0" layoutY="631.0" minHeight="247.0" opacity="1.0" prefHeight="247.0" prefWidth="900.0" visible="false" />
     <Label font="$x2" layoutX="218.0" layoutY="437.0" text="ISK" />
-    <Label font="$x2" layoutX="804.0" layoutY="249.0" text="ISK" />
+    <Label font="$x2" layoutX="813.0" layoutY="249.0" text="ISK" />
     <Pane fx:id="bDialog" layoutX="157.0" layoutY="73.0" prefHeight="364.0" prefWidth="373.0" visible="false">
       <children>
         <TextField fx:id="bname" focusTraversable="false" layoutX="55.0" layoutY="145.0" prefHeight="42.0" prefWidth="263.0" promptText="Please write your full name" />

@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -79,10 +80,7 @@ public class BookingController implements Initializable {
     
     //private Cart cart = new Cart();
     
-    //private TourInfo tour; 
-    
     private boolean pickup = false;
-    
     
 
     /**
@@ -104,14 +102,14 @@ public class BookingController implements Initializable {
     /*
      * Presents the chosen tour from the main page
      */
-    public void showTour(String btitle, int bprice, int bduration, String babout) {
-        title.setText(btitle);
-        price.setText(Integer.toString(bprice));
-        duration.setText(Integer.toString(bduration));
-        about.setText(babout);
+    public void showTour(List<TourInfo> currentList, int id) {
+        title.setText(currentList.get(id).title);
+        price.setText(Integer.toString(currentList.get(id).priceISK));
+        duration.setText(Integer.toString(currentList.get(id).durationHours));
+        about.setText(currentList.get(id).description);
         
-        //Image image = new Image(img);
-        //image.setImage(image); 
+        Image bimage = new Image(currentList.get(id).img);
+        image.setImage(bimage);
     }
     
     /*
