@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public final class TourInfo {
     private boolean[]       monthsAvailable;
-    private int             seatsPerDay;
+    public final int        seatsPerDay;
     private int[]           freeSeats;
     public final boolean    doesPickup;
     public final Region     region;
@@ -156,8 +156,10 @@ public final class TourInfo {
         cal.setTime(end);
         int d1 = cal.get(Calendar.DAY_OF_YEAR) - 1;
         
-        // NOTE:    This method does NOT check whether
-        //           begin is BEFORE end.
+        if (d1 < d0) {
+            return new int[0];
+        }
+        
         int[] out = new int[(d1 - d0) + 1];
         
         for (int i = d0; i <= d1; i++) {
@@ -169,7 +171,7 @@ public final class TourInfo {
     
     // This method fills out the freeSeats array based on
     //  monthsAvailable and seatsPerDay.
-    public void Complete() {
+    private void Complete() {
         int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int r = 0;
         for (int i = 0; i < 12; i++) {
@@ -226,7 +228,8 @@ public final class TourInfo {
             String i,
             String d,
             String a,
-            int rat) {
+            int rat,
+            int fs) {
         doesPickup = dp;
         region = reg;
         durationHours = dur;
@@ -242,12 +245,14 @@ public final class TourInfo {
             monthsAvailable[k] = av[k];
         }
         
-        seatsPerDay = 10;
+        seatsPerDay = fs;
         freeSeats = new int[365];
         
         tags = new ArrayList<>();
         activity = new ArrayList<>();
         
         ID = GenID();
+        
+        this.Complete();
     }
 }

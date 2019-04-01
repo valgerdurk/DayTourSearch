@@ -33,6 +33,13 @@ public class InfoCache {
         for (BookingInfo b : pending) {
             if (!b.tour.ReserveSeats(b.day, b.seats)) {
                 return false;
+                
+                // NOTE: If the desired behaviour is that
+                //  booking list continues processing after
+                //  an invalid booking, use the below line
+                //  instead of the above.
+                
+                //continue;
             }
             bookings.add(b);
         }

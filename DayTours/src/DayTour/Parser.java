@@ -19,6 +19,7 @@ import java.util.List;
 public class Parser {
     private class TextData {
         public boolean[]       months;
+        public int             seats;
         public boolean         doesPickup;
         public Region          region;
         public int             durationHours;
@@ -34,6 +35,7 @@ public class Parser {
         
         public TextData() {
             months = new boolean[12];
+            seats = 0;
             doesPickup = false;
             region = Region.UNDEFINED;
             durationHours = 0;
@@ -115,6 +117,10 @@ public class Parser {
                     }
                 }
                 break;
+                
+            case "seats":
+                obj.seats = Integer.parseInt(StripQuotes(StripComma(value)));
+                break;
 
             case "type":
                 if (value.matches("\\[.*\\],")) {
@@ -176,7 +182,8 @@ public class Parser {
                 obj.image,
                 obj.desc,
                 obj.availDesc,
-                obj.rating);
+                obj.rating,
+                obj.seats);
         
         for (TourType type : obj.types) {
             t.AddActivity(type);
@@ -185,8 +192,6 @@ public class Parser {
         for (String s : obj.tags) {
             t.AddTag(s);
         }
-        
-        t.Complete();
         
         return t;
     }

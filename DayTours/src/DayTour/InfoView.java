@@ -1,6 +1,8 @@
 
 package DayTour;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -79,13 +81,24 @@ public class InfoView {
         }
         return dList;
     }
-    /*public List<TourInfo> SearchByInterval  (Date start, Date end) {   
+    
+    // This method uses the DAY OF YEAR of 'start' and 'end' in
+    //  order to build out a list of tours.  Any TourInfo which 
+    //  has greater than -1 empty seats for one or more days of
+    //  the specified interval will be part of the return set.
+    public List<TourInfo> SearchByInterval  (Date start, Date end) {   
         List<TourInfo> itvList = new ArrayList<TourInfo>(); 
         for (TourInfo t : tours.AllTours()) {
-            //TODO
+            int[] seats = t.IsAvailable(start, end);
+            for (int s : seats) {
+                if (s >= 0) {
+                    itvList.add(t);
+                    break;
+                }
+            }
         }
         return itvList;
-    }*/
+    }
     
     public List<TourInfo> SortByRating  (List<TourInfo> inList) {
         List<TourInfo> rateList = new ArrayList<TourInfo>(); 
