@@ -39,7 +39,7 @@ public class InfoCache {
                 //  an invalid booking, use the below line
                 //  instead of the above.
                 
-                //continue;
+                // continue;
             }
             bookings.add(b);
         }

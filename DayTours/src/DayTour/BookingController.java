@@ -5,6 +5,9 @@
  */
 package DayTour;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -108,8 +111,12 @@ public class BookingController implements Initializable {
         duration.setText(Integer.toString(currentList.get(id).durationHours));
         about.setText(currentList.get(id).description);
         
-        Image bimage = new Image(currentList.get(id).img);
-        image.setImage(bimage);
+        try {
+            Image bimage = new Image(new FileInputStream(currentList.get(id).img));
+            image.setImage(bimage);
+        } catch (FileNotFoundException e) {
+            System.out.println("Image not found for tour: " + currentList.get(id).title);
+        }
     }
     
     /*

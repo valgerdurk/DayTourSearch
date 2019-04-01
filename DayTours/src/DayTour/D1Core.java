@@ -32,6 +32,9 @@ public class D1Core extends Application {
         
         // Temporary testing code below, confirming that GenBookingSet(..)
         //  is behaving as expected.
+        
+        // GenBookingSet();
+        
         InfoCache c = new InfoCache();
         // c.LoadFromText("trips.txt");
         // c.WriteToDisk("tourdata.dat");
