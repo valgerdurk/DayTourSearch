@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -14,51 +15,219 @@
         <Font size="36.0" />
       </font>
     </Label>
-    <VBox fx:id="bookings" layoutY="72.0" minWidth="840.0" prefHeight="299.0" prefWidth="875.0">
-      <children>
-        <AnchorPane fx:id="booking" prefHeight="127.0" prefWidth="872.0" visible="false">
+    <ScrollPane id="ScrollPane" layoutX="-1.0" layoutY="84.0" prefHeight="279.0" prefViewportHeight="1111.0" prefViewportWidth="875.0">
+      <content>
+        <VBox id="VBox" fx:id="bookings" alignment="TOP_LEFT" prefHeight="1111.0" spacing="5.0">
           <children>
-            <Label fx:id="title" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="">
-              <font>
-                <Font size="20.0" fx:id="x1" />
-              </font>
-            </Label>
-            <Label fx:id="date" font="$x1" layoutX="14.0" layoutY="44.0" prefHeight="41.0" prefWidth="109.0" text="" />
-            <Label fx:id="price" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
-            <Label fx:id="noTravelers" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
-            <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
-            <CheckBox id="checkRemove" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
-            <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+              <Pane id="booking" fx:id="booking_0" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove0" fx:id="box0" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label layoutX="783.0" layoutY="56.0" text="ISK">
+                    <font>
+                      <Font size="20.0" fx:id="x1" />
+                    </font>
+                  </Label>
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label fx:id="price" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label fx:id="noTravelers" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label fx:id="date" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label fx:id="title" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_1" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove1" fx:id="box1" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price1" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers1" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date1" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title1" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_2" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove2" fx:id="box2" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price2" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers2" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date2" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title2" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_3" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove3" fx:id="box3" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price3" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers3" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date3" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title3" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_4" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove4" fx:id="box4" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price4" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers4" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date4" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title4" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_5" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove5" fx:id="box5" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price5" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers5" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date5" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title5" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_6" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove6" fx:id="box6" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price6" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers6" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date6" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title6" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_7" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove7" fx:id="box7" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price7" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers7" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date7" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title7" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_8" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove8" fx:id="box8" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price8" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers8" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date8" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title8" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
+              <Pane id="booking" fx:id="booking_9" prefHeight="106.0" prefWidth="875.0" visible="false">
+                <children>
+                  <CheckBox id="checkRemove9" fx:id="box9" layoutX="833.0" layoutY="60.0" mnemonicParsing="false" onAction="#checkRemove" prefHeight="22.0" text="" />
+                  <Label font="$x1" layoutX="783.0" layoutY="56.0" text="ISK" />
+                  <Label font="$x1" layoutX="747.0" layoutY="14.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
+                  <Label id="price" fx:id="price9" font="$x1" layoutX="704.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
+                  <Label id="noTravelers" fx:id="noTravelers9" font="$x1" layoutX="723.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
+                  <Label id="date" fx:id="date9" font="$x1" layoutX="14.0" layoutY="49.0" prefHeight="41.0" prefWidth="109.0" text="" />
+                  <Label id="title" fx:id="title9" font="$x1" layoutX="14.0" layoutY="12.0" prefHeight="30.0" prefWidth="433.0" text="" />
+                </children>
+              </Pane>
           </children>
-        </AnchorPane>
-        <AnchorPane prefHeight="164.0" prefWidth="921.0" visible="false">
-          <children>
-            <Label id="title" font="$x1" layoutX="14.0" layoutY="13.0" prefHeight="30.0" prefWidth="433.0" text="" />
-            <Label id="date" font="$x1" layoutX="14.0" layoutY="44.0" prefHeight="41.0" prefWidth="109.0" text="" />
-            <Label id="price" font="$x1" layoutX="805.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
-            <Label id="noTravelers" font="$x1" layoutX="806.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
-            <Label font="$x1" layoutX="853.0" layoutY="56.0" prefHeight="29.0" prefWidth="47.0" text="USD" />
-            <Label font="$x1" layoutX="828.0" layoutY="13.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
-          </children>
-        </AnchorPane>
-        <AnchorPane prefHeight="164.0" prefWidth="921.0" visible="false">
-          <children>
-            <Label id="title" font="$x1" layoutX="14.0" layoutY="13.0" prefHeight="30.0" prefWidth="433.0" text="" />
-            <Label id="date" font="$x1" layoutX="14.0" layoutY="44.0" prefHeight="41.0" prefWidth="109.0" text="" />
-            <Label id="price" font="$x1" layoutX="805.0" layoutY="56.0" prefHeight="30.0" prefWidth="72.0" text="" />
-            <Label id="noTravelers" font="$x1" layoutX="806.0" layoutY="14.0" prefHeight="30.0" prefWidth="47.0" text="" />
-            <Label font="$x1" layoutX="853.0" layoutY="56.0" prefHeight="29.0" prefWidth="47.0" text="USD" />
-            <Label font="$x1" layoutX="828.0" layoutY="13.0" prefHeight="29.0" prefWidth="72.0" text="x  adult" />
-          </children>
-        </AnchorPane>
-      </children>
-    </VBox>
-    <Button fx:id="checkout" font="$x1" layoutX="707.0" layoutY="412.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="151.0" text="Checkout" />
+          <fx:define>
+            <ArrayList fx:id="bookingList">
+              <fx:reference source="booking_0" />
+              <fx:reference source="booking_1" />
+              <fx:reference source="booking_2" />
+              <fx:reference source="booking_3" />
+              <fx:reference source="booking_4" />
+              <fx:reference source="booking_5" />
+              <fx:reference source="booking_6" />
+              <fx:reference source="booking_7" />
+              <fx:reference source="booking_8" />
+              <fx:reference source="booking_9" />
+            </ArrayList>
+          </fx:define>
+          <fx:define>
+            <ArrayList fx:id="titleList">
+              <fx:reference source="title" />
+              <fx:reference source="title1" />
+              <fx:reference source="title2" />
+              <fx:reference source="title3" />
+              <fx:reference source="title4" />
+              <fx:reference source="title5" />
+              <fx:reference source="title6" />
+              <fx:reference source="title7" />
+              <fx:reference source="title8" />
+              <fx:reference source="title9" />
+            </ArrayList>
+          </fx:define>
+          <fx:define>
+            <ArrayList fx:id="priceList">
+              <fx:reference source="price" />
+              <fx:reference source="price1" />
+              <fx:reference source="price2" />
+              <fx:reference source="price3" />
+              <fx:reference source="price4" />
+              <fx:reference source="price5" />
+              <fx:reference source="price6" />
+              <fx:reference source="price7" />
+              <fx:reference source="price8" />
+              <fx:reference source="price9" />
+            </ArrayList>
+          </fx:define>
+          <fx:define>
+            <ArrayList fx:id="dateList">
+              <fx:reference source="date" />
+              <fx:reference source="date1" />
+              <fx:reference source="date2" />
+              <fx:reference source="date3" />
+              <fx:reference source="date4" />
+              <fx:reference source="date5" />
+              <fx:reference source="date6" />
+              <fx:reference source="date7" />
+              <fx:reference source="date8" />
+              <fx:reference source="date9" />
+            </ArrayList>
+          </fx:define>
+          <fx:define>
+            <ArrayList fx:id="seatsList">
+              <fx:reference source="noTravelers" />
+              <fx:reference source="noTravelers1" />
+              <fx:reference source="noTravelers2" />
+              <fx:reference source="noTravelers3" />
+              <fx:reference source="noTravelers4" />
+              <fx:reference source="noTravelers5" />
+              <fx:reference source="noTravelers6" />
+              <fx:reference source="noTravelers7" />
+              <fx:reference source="noTravelers8" />
+              <fx:reference source="noTravelers9" />
+            </ArrayList>
+          </fx:define>
+          <fx:define>
+            <ArrayList fx:id="boxList">
+              <fx:reference source="box0" />
+              <fx:reference source="box1" />
+              <fx:reference source="box2" />
+              <fx:reference source="box3" />
+              <fx:reference source="box4" />
+              <fx:reference source="box5" />
+              <fx:reference source="box6" />
+              <fx:reference source="box7" />
+              <fx:reference source="box8" />
+              <fx:reference source="box9" />
+            </ArrayList>
+          </fx:define>
+        </VBox>
+      </content>
+    </ScrollPane>
+    <Button fx:id="checkout" font="$x1" layoutX="707.0" layoutY="412.0" mnemonicParsing="false" onAction="#checkout" prefHeight="44.0" prefWidth="151.0" text="Checkout" />
     <Button fx:id="remove" layoutX="707.0" layoutY="371.0" minHeight="28.0" minWidth="28.0" mnemonicParsing="false" onAction="#removeBooking" prefHeight="30.0" prefWidth="151.0" text="Remove selected">
       <font>
         <Font size="15.0" />
       </font>
     </Button>
     <Label fx:id="cartEmptyLabel" font="$x1" layoutX="352.0" layoutY="220.0" prefWidth="168.0" text="Your cart is empty" visible="false" />
+    <Label fx:id="totalPrice" font="$x1" layoutX="448.0" layoutY="419.0" prefHeight="30.0" prefWidth="232.0" text="" />
   </children>
 </AnchorPane>

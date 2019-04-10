@@ -6,16 +6,17 @@
 package DayTour;
 
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 /**
  * FXML Controller class
@@ -25,34 +26,32 @@ import javafx.scene.text.Font;
 public class CartController implements Initializable {
 
     @FXML
-    private Label title;
-    @FXML
-    private Font x1;
-    @FXML
-    private Label date;
-    @FXML
-    private Label price;
-    @FXML
-    private Label noTravelers;
-    @FXML
     private Button checkout;
     @FXML
     private Button remove;
     @FXML
-    private AnchorPane booking;
-    @FXML
     private VBox bookings;
     @FXML
     private Label cartEmptyLabel;
+    @FXML
+    private Label totalPrice;
     
+    @FXML
+    private List<Pane> bookingList;
+    @FXML
+    private List<Label> titleList;
+    @FXML
+    private List<Label> priceList;
+    @FXML
+    private List<Label> dateList;
+    @FXML
+    private List<Label> seatsList;
+    @FXML
+    private List<CheckBox> boxList;
     
-    private boolean removeTour = false;
-  
-    //private Cart cart;
-
-    // TO-DO gera snyrtilegra og skjala betur
+    private boolean removeTour[] = new boolean[10];
     
-    /**
+    /*
      * Initializes the controller class.
      */
     @Override
@@ -61,33 +60,58 @@ public class CartController implements Initializable {
     }    
     
     /**
-     * Presents booking in cart
-     * TO-DO implement for more than one booking
+     * Presents the bookings currently in Cart.java
      */
-    public void makeBooking(String btitle,LocalDate bdate,String bprice,Object btravelers) {
-        booking.setVisible(true);
+    public void makeBookings() {
+        List<BookingInfo> bookings = BookingController.cart.pending;
+        //int total = 0;
         
-        title.setText(btitle);
-        date.setText(bdate.toString());
-        price.setText(bprice);
-        noTravelers.setText(btravelers.toString());
+        for(int i = 0; i < bookings.size(); i++) {
+            bookingList.get(i).setVisible(true);
+
+            titleList.get(i).setText(bookings.get(i).tour.title);
+            //dateList.get(i).setText(Integer.toString(bookings.get(i).day));
+            priceList.get(i).setText(Integer.toString(bookings.get(i).tour.priceISK*bookings.get(0).seats));
+            seatsList.get(i).setText(Integer.toString(bookings.get(i).seats));
+            //total += bookings.get(i).tour.priceISK*bookings.get(i).seats;
+        }
+        //totalPrice.setText("Total: " + Integer.toString(total) + " ISK");
     }
     
     /*
-    * Removes all bookings marked for removal
-    * TO-DO implement for more than one booking
+    * Removes all bookings marked for removal from Cart
     */
     @FXML
     private void removeBooking(ActionEvent event) {
-        if (removeTour) {
-            bookings.getChildren().remove(booking);
-            //cart.removeBooking(0);
-            cartEmptyLabel.setVisible(true);
-        }
+        List<BookingInfo> allBookings = BookingController.cart.pending;
+        
+        for(int i = 0; i < allBookings.size(); i++) {
+            if(removeTour[i] == true) {
+                bookings.getChildren().remove(bookingList.get(i));
+                BookingController.cart.removeBooking(i);
+            }
+        } 
     } 
-
+    
+    /**
+     * Checked tours are marked for removal
+     * @param event 
+     */
     @FXML
     private void checkRemove(ActionEvent event) {
-        removeTour = true;
+        for(int i = 0; i < boxList.size(); i++) {
+            if(event.getSource() == boxList.get(i)) {
+                removeTour[i] = true;
+            } 
+        }
+    }
+    
+    /**
+     * Checkout button does nothing but exit the program
+     * @param event 
+     */
+    @FXML
+    private void checkout(ActionEvent event) {
+        Platform.exit();
     }
 }

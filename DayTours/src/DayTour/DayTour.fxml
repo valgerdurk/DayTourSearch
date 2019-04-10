@@ -5,25 +5,30 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="DayTour.DayTourController">
   <children>
     <BorderPane prefHeight="768.0" prefWidth="1024.0">
       <center>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <ScrollPane fitToHeight="false" fitToWidth="false" maxHeight="-1.0" prefHeight="200.0" prefViewportHeight="0.0" prefWidth="200.0" BorderPane.alignment="CENTER">
           <content>
-            <ListView fx:id="list" onMouseClicked="#chooseTour" prefHeight="1200.0" prefWidth="1022.0" />
+            <ListView fx:id="list" onMouseClicked="#chooseTour" prefHeight="3000.0" prefWidth="1022.0" />
           </content>
         </ScrollPane>
       </center>
       <top>
         <HBox prefHeight="35.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
           <children>
-            <ComboBox fx:id="regionCombo" prefHeight="35.0" prefWidth="150.0" promptText="Region" />
-            <ComboBox fx:id="priceCombo" prefHeight="35.0" prefWidth="150.0" promptText="Price" />
-            <DatePicker fx:id="datePicker" prefHeight="35.0" prefWidth="150.0" />
-            <TextField fx:id="searchInput" prefHeight="36.0" prefWidth="197.0" />
-            <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" text="Search" />
+            <ComboBox fx:id="regionCombo" onAction="#searchByRegion" prefHeight="35.0" prefWidth="180.0" promptText="Choose region" />
+            <ComboBox id="regionCombo" fx:id="typeCombo" onAction="#searchByType" prefHeight="35.0" prefWidth="170.0" promptText="Choose type" />
+            <ComboBox id="priceCombo" fx:id="sortByCombo" onAction="#handleSort" prefHeight="35.0" prefWidth="169.9998779296875" promptText="Sort by" />
+            <TextField fx:id="searchInput" prefHeight="35.0" prefWidth="325.0000999999975" promptText="What do you want to do in Iceland?" />
+            <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" prefWidth="178.0" text="Search">
+              <font>
+                <Font size="15.0" />
+              </font>
+            </Button>
           </children>
         </HBox>
       </top>

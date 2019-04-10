@@ -7,7 +7,6 @@ package DayTour;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -34,7 +33,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -69,31 +67,29 @@ public class BookingController implements Initializable {
     @FXML
     private Pane bDialog;
     @FXML
-    private Font x2;
-    @FXML
-    private CartController cartController;
-    @FXML
-    private Font x1;
-    @FXML
     private TextField bname;
     @FXML
     private TextField bhotel;
+    @FXML
+    private Label errorMessage;
     
-    // TO-DO gera snyrtilegra og skjala betur
-    
-    //private Cart cart = new Cart();
+    private CartController cartController;
     
     private boolean pickup = false;
     
+    private TourInfo currentTour;
+    
+    public static Cart cart = new Cart();
 
-    /**
+
+    /*
      * Initializes the controller class.
-     * 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nTravelers.getItems().removeAll(nTravelers.getItems());
         nTravelers.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+        nTravelers.getSelectionModel().selectFirst();
         
         DatePicker datePicker = new DatePicker();
         
@@ -111,12 +107,17 @@ public class BookingController implements Initializable {
         duration.setText(Integer.toString(currentList.get(id).durationHours));
         about.setText(currentList.get(id).description);
         
+        int total = Integer.parseInt(price.getText());
+        updatedPrice.setText(Integer.toString(total));
+        
         try {
             Image bimage = new Image(new FileInputStream(currentList.get(id).img));
             image.setImage(bimage);
         } catch (FileNotFoundException e) {
             System.out.println("Image not found for tour: " + currentList.get(id).title);
         }
+        
+        currentTour = currentList.get(id);
     }
     
     /*
@@ -139,15 +140,14 @@ public class BookingController implements Initializable {
         
         final Node cart = p.lookupButton(addToCart);
         cart.disableProperty()
-                .bind(bname.textProperty().isEmpty());
+                .bind(bname.textProperty().isEmpty()
+                    .or(bhotel.textProperty().isEmpty()));
         
         Optional<ButtonType> result = d.showAndWait();
         if (result.isPresent() && (result.get()
                 .getButtonData() == ButtonBar.ButtonData.OK_DONE)) {
-        } else {
-            // villumelding
-        }
-        addToCart();
+            reserveTour();
+        } 
     }
     
     
@@ -158,8 +158,8 @@ public class BookingController implements Initializable {
     @FXML
     private void chooseSeats(ActionEvent event) {
         int travelers = getSeatQt();
-        int total = Integer.parseInt(price.getText())*travelers;
-        updatedPrice.setText(Integer.toString(total));
+        int totalPrice = Integer.parseInt(price.getText())*travelers;
+        updatedPrice.setText(Integer.toString(totalPrice));
     }
      
     /**
@@ -178,10 +178,30 @@ public class BookingController implements Initializable {
      */
     @FXML
     private void handleBook() {
-       bookingDialog();
-       
-       // TO-DO villumeldingar
+        if (datePick.getValue() != null) {
+            errorMessage.setVisible(false);
+            bookingDialog();
+        } else {
+            errorMessage.setVisible(true);
+        }
     } 
+    
+    /**
+     * Reserves the chosen tour if it's available
+     * and adds it to the cart
+     */
+    private void reserveTour() {
+        int date = datePick.getValue().getDayOfYear();
+        int travelers = getSeatQt();
+        
+        if(currentTour.ReserveSeats(date, travelers)) {
+            cart.makeBooking(date, travelers, bname.getText(), pickup, bhotel.getText(), currentTour);
+            addToCart();
+        } else {
+            System.out.println("Tour not available");
+            about.setText("Sorry, this tour is not available or sold out on this day. Please try another date");
+        }
+    }
     
     /**
      * Handler for hotel pickup check-box
@@ -194,16 +214,7 @@ public class BookingController implements Initializable {
     }
     
     /**
-     * 
-     * @param date
-     * @return 
-     */
-    private int parseDate(LocalDate date) {
-        return 0;
-    }
-    
-    /**
-     * TO-DO make booking in Cart.java
+     * Launches the cart with all current bookings
      */
     private void addToCart() {
         try {
@@ -216,10 +227,7 @@ public class BookingController implements Initializable {
         } catch (Exception e) {
             System.out.println("Can't load new window" + e.getMessage());
         }
-         
-        int date = parseDate(datePick.getValue());
-        int travelers = getSeatQt();
         
-        cartController.makeBooking(title.getText(), datePick.getValue(), updatedPrice.getText(), nTravelers.getValue());
+        cartController.makeBookings();
     }
 }

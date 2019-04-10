@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Cart {
     
-    private List<BookingInfo> pending = new ArrayList<BookingInfo>();
+    public List<BookingInfo> pending = new ArrayList<BookingInfo>();
     private BookingInfo booking;
     
     /**

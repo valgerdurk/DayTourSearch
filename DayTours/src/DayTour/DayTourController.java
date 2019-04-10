@@ -1,15 +1,10 @@
 package DayTour;
 
-import static DayTour.Region.Interpret;
-import static DayTour.TourType.Interpret;
-import java.awt.event.ActionEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,110 +12,61 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
- *
- * @author Guðrún Stella Ágústsdóttir Háskóli Íslands gsa15@hi.is
+ *  
  * @author Valgerdur Kristinsdottir <vak9@hi.is>
+ * @author Guðrún Stella Ágústsdóttir Háskóli Íslands gsa15@hi.is
  */
 public class DayTourController implements Initializable {
-
-    private final int id = 0; //id for tours
-   
-    @FXML
-    private ComboBox<Region> regionCombo;
-    @FXML
-    private ComboBox<String> priceCombo;
-    
-    //private MultipleSelectionModel msl;    //model for choise of list
+                 
     private final InfoCache tours = new InfoCache();
     
     @FXML
-    private DatePicker datePicker;
-    private final Label title = new Label();
-    private final Label price = new Label(); 
-    private final Label duration = new Label();
-    
-    //private final HBox hbox = new HBox(); this is something that can be done if we want to get cellFactory and make a list appear with images       
-    //private final Pane pane = new Pane(); this would be used with the hbox above for same reason I think
-    //private final String img = new String(); this also, but it would make the work harder
-
-    //for regionCombo window
-    private static final String REGION = "Region";
-    private static final String PRICE = "Price";
-    
+    private ComboBox<String> regionCombo;
     @FXML
     private ListView<String> list;    
    
-    // Added by Vala
     private BookingController bookingController;
     private InfoView viewTours;
     @FXML
     private TextField searchInput;
     private List<TourInfo> currentList;
+    @FXML
+    private ComboBox<String> typeCombo;
+    @FXML
+    private ComboBox<String> sortByCombo;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        tours.LoadFromDisk("tourdata.dat");
+        // Initialize regionCombo box
         regionCombo.getItems().removeAll(regionCombo.getItems());
-        regionCombo.getItems().addAll(
-                    Region.CAPITAL, 
-                    Region.EAST, 
-                    Region.HIGHLANDS, 
-                    Region.NORTH, 
-                    Region.SOUTH, 
-                    Region.WESTCOAST, 
-                    Region.WESTFJORDS, 
-                    Region.UNDEFINED
-        );
+        regionCombo.getItems().addAll("Westfjords","East","North","Capital area","South","West");
         
-        /*regionCombo.setCellFactory(new Callback<ListView<Region>, Listcell<Region>() {
-            @Override public ListCell<Region> call(ListView<Region> r) {
-                final ListCall<Region> cell = new ListCell<Region>() {
-                    {
-                        super.getListView();
-                    }
-                    @Override public void updateItem(Region reg, boolean empty) {
-                        super.updateItem(reg, empty);
-                        if(reg != 0) {
-                            setText(reg);
-                        } else {
-                            setText(null);
-                        }
-                    };
-                    return cell;        
-                }
-        });*/
+        // Initialize typeCombo box
+        typeCombo.getItems().removeAll(typeCombo.getItems());
+        typeCombo.getItems().addAll("Hiking","Sailing","Glacier","Food","Sights");
         
+        //Initialize sortByCombo box
+        sortByCombo.getItems().removeAll(sortByCombo.getItems());
+        sortByCombo.getItems().addAll("Price","Duration");
         
-        datePicker.setOnAction(event -> {
-     
-        LocalDate date = datePicker.getValue();
-        System.out.println("Selected date: " + date);
-        });
-        
-        
-        // Bætt við af Völu
-        currentList = tours.AllTours();   // Make initial list of tours
+        // Load initial list of tours
+        tours.LoadFromDisk("tourdata.dat");
+        currentList = tours.AllTours();   
         showTours(currentList); 
     }
-    
-    // Breytt af Völu (áður appearList)
+   
     /**
      * Make current list of tours appear
      */
@@ -128,21 +74,49 @@ public class DayTourController implements Initializable {
         // Clear previous list
         list.getItems().clear();
         
+        // Observable list with the tour information
+        ObservableList<String> items = FXCollections.observableArrayList();
         for(int i = 0; i < currentList.size(); i++) {
-            String tourInfo = currentList.get(i).title 
-                    + " - " + Integer.toString(currentList.get(i).priceISK) + " ISK - " 
-                    + Integer.toString(currentList.get(i).durationHours) + " hours "
-                    + currentList.get(i).region; 
-            list.getItems().add(tourInfo);
+            items.add(currentList.get(i).title +
+                    "\nPrice: " + Integer.toString(currentList.get(i).priceISK) +
+                    " ISK    Duration: " + Integer.toString(currentList.get(i).durationHours)
+                    + " hours");
         }
+        
+        list.getItems().addAll(items);
+        
+        // ImageView for tour images added for every matching cell in the ListView
+        list.setCellFactory(param -> new ListCell<String>() {
+            private ImageView imageView = new ImageView();
+            @Override
+            public void updateItem(String name, boolean empty) {
+                for(int i = 0; i < currentList.size(); i++) {
+                    super.updateItem(name, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        try {
+                            Image image = new Image(new FileInputStream(currentList.get(i).img),150,150,false,false);
+                            if(name.equals(items.get(i))) {
+                                imageView.setImage(image);
+                            }
+                            setText(name);
+                            setFont(Font.font(20));
+                            setGraphic(imageView);
+                        } catch (FileNotFoundException e) {
+                            System.out.println("Image not found for tour: " + currentList.get(i).title);
+                        }
+                    }
+                }
+            }
+        });
     }
-    
-    // Bætt við af völu
+   
     /**
-     * Open booking dialog for chosen tour
+     * Opens booking dialog for chosen tour
      */
     private void tourDialog(List<TourInfo> currentList) {
-        
         int tourId = list.getSelectionModel().getSelectedIndex();
                 
         try {
@@ -155,53 +129,89 @@ public class DayTourController implements Initializable {
         } catch (Exception e) {
             System.out.println("Can't load new window" + e.getMessage());
         }
-        
         bookingController.showTour(currentList, tourId);
-    }
-        
-    /**
-     * fetch list from InfoCache
-     */
-    ObservableList<TourInfo> AllTours() {
-        ObservableList<TourInfo> listTours = FXCollections.observableArrayList(tours.AllTours());
-        return listTours;
     }
     
     /**
-     * Upgrade listView depending on list
-     * @param selectedItems 
+     * Handler for the search window 
+     * Returns a list of tours that contain the input string
+     * in the tour title or as a tag word
+     * @param event 
      */
-    void listControle(ObservableList<TourInfo> selectedItems) {
-        tours.AllTours().addAll(selectedItems);//currentList
-    }
-   
-    private void filterByRegion(javafx.event.ActionEvent event) {
-        viewTours = new InfoView();
-        viewTours.init();
-        
-        List<TourInfo> displayedRegion = viewTours.SearchByRegion(regionCombo.getValue());
-        currentList = displayedRegion;
-        
-        showTours(currentList);
-    }
-        
-    // Bætt við af Völu
     @FXML
     private void handleSearch(javafx.event.ActionEvent event) {
         viewTours = new InfoView();
         viewTours.init();
-        
+       
         List<TourInfo> displayedTours = viewTours.SearchByText(searchInput.getText());
         currentList = displayedTours;
         showTours(currentList);
     }
     
-    // Bætt við af Völu
+    /**
+     * Handler for when a tour is clicked 
+     * Opens up a booking dialog for the chosen tour
+     * @param event 
+     */
     @FXML
     private void chooseTour(MouseEvent event) {
         tourDialog(currentList);
     }
-
-
     
+    /**
+     * Handler for the Region combo box
+     * Returns a list of tours in the chosen region
+     * @param event 
+     */
+    @FXML
+    private void searchByRegion(javafx.event.ActionEvent event) {
+        String region = regionCombo.getValue().toLowerCase();
+     
+        viewTours = new InfoView();
+        viewTours.init();
+        List<TourInfo> displayedTours = viewTours.SearchByRegion(Region.Interpret(region));
+        
+        currentList = displayedTours;
+        showTours(currentList);
+    }
+    
+    /**
+     * Handler for the Type combo box
+     * Returns a list of tours for the chosen type
+     * @param event 
+     */
+    @FXML
+    private void searchByType(javafx.event.ActionEvent event) {
+        String type = typeCombo.getValue().toUpperCase();
+     
+        viewTours = new InfoView();
+        viewTours.init();
+        List<TourInfo> displayedTours = viewTours.SearchByType(TourType.Interpret(type));
+        
+        currentList = displayedTours;
+        showTours(currentList);
+    }
+    
+    /**
+     * Handler for the SortBy combo box
+     * Returns list of tours sorted by 
+     * price or duration depending on what was chosen
+     * @param event 
+     */
+    @FXML
+    private void handleSort(javafx.event.ActionEvent event) {
+        String sort = sortByCombo.getValue();
+        
+        viewTours = new InfoView();
+        viewTours.init();
+        
+        if ("Price".equals(sort)) {
+            List<TourInfo> displayedTours = viewTours.SortByPrice(currentList);
+            currentList = displayedTours;
+        } else if("Duration".equals(sort)) {
+            List<TourInfo> displayedTours = viewTours.SortByDuration(currentList);
+            currentList = displayedTours;
+        } 
+        showTours(currentList);
+    }
 }

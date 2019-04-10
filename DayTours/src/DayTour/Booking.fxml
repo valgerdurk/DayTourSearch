@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="booking" minHeight="711.0" minWidth="865.0" prefHeight="719.0" prefWidth="872.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="DayTour.BookingController">
   <children>
-    <ImageView fx:id="image" fitHeight="386.9999959561508" fitWidth="515.9999389648438" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="image" fitHeight="394.0" fitWidth="525.333271194182" layoutX="9.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
     <Button fx:id="bookNowButton" layoutX="679.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleBook" prefHeight="59.0" prefWidth="162.0" text="Book now" textAlignment="CENTER" wrapText="true">
       <font>
         <Font size="20.0" fx:id="x2" />
@@ -29,7 +29,7 @@
     </Label>
     <Label fx:id="about" font="$x2" layoutX="9.0" layoutY="475.0" prefHeight="244.0" prefWidth="849.0" text="" visible="true" wrapText="true" />
     <Label font="$x2" layoutX="679.0" layoutY="153.0" prefHeight="51.0" prefWidth="226.0" text="Number of travelers" />
-    <ComboBox fx:id="nTravelers" layoutX="679.0" layoutY="204.0" onAction="#chooseSeats" pickOnBounds="false" prefWidth="152.0" promptText="0">
+    <ComboBox fx:id="nTravelers" layoutX="679.0" layoutY="204.0" onAction="#chooseSeats" pickOnBounds="false" prefWidth="161.9998779296875" promptText="1">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Item 1" />
@@ -45,10 +45,10 @@
     <fx:include fx:id="cart" source="Cart.fxml" disable="false" focusTraversable="false" layoutX="6.0" layoutY="631.0" minHeight="247.0" opacity="1.0" prefHeight="247.0" prefWidth="900.0" visible="false" />
     <Label font="$x2" layoutX="218.0" layoutY="437.0" text="ISK" />
     <Label font="$x2" layoutX="813.0" layoutY="249.0" text="ISK" />
-    <Pane fx:id="bDialog" layoutX="157.0" layoutY="73.0" prefHeight="364.0" prefWidth="373.0" visible="false">
+    <Pane fx:id="bDialog" layoutX="157.0" layoutY="73.0" prefHeight="362.0" prefWidth="373.0" visible="false">
       <children>
-        <TextField fx:id="bname" focusTraversable="false" layoutX="55.0" layoutY="145.0" prefHeight="42.0" prefWidth="263.0" promptText="Please write your full name" />
-        <TextField fx:id="bhotel" layoutX="55.0" layoutY="222.0" prefHeight="42.0" prefWidth="263.0" promptText="Hotel name" />
+        <TextField fx:id="bname" focusTraversable="true" layoutX="55.0" layoutY="145.0" prefHeight="42.0" prefWidth="263.0" promptText="Please write your full name" visible="true" />
+        <TextField fx:id="bhotel" focusTraversable="false" layoutX="55.0" layoutY="222.0" prefHeight="42.0" prefWidth="263.0" promptText="Hotel name" />
         <CheckBox fx:id="hotelPickup" layoutX="55.0" layoutY="272.0" mnemonicParsing="false" onDragDetected="#hotelPickup" prefHeight="21.0" prefWidth="263.0" text="I want to be picked up at my hotel">
           <font>
             <Font size="15.0" fx:id="x1" />
@@ -60,5 +60,6 @@
         <Label font="$x2" layoutX="55.0" layoutY="14.0" prefWidth="174.99997792968497" text="Almost done!" />
       </children>
     </Pane>
+    <Label fx:id="errorMessage" layoutX="679.0" layoutY="316.0" prefWidth="162.0" text="You need to pick a date" visible="false" />
   </children>
 </AnchorPane>
